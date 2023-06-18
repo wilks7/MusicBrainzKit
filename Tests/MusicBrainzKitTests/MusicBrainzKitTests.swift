@@ -43,7 +43,26 @@ final class MusicBrainzKitTests: XCTestCase {
             XCTAssertTrue(artists.contains(where: {$0.name == artist.name}), "Artists should containt \(artist.name)")
 
         } catch {
+            print(error)
             XCTFail("Failed to fetch artists: \(error)")
         }
     }
+    
+    func testGetArtistEvents() async throws {
+        let id = phish.id
+
+        do {
+            let artist = try await client.getArtist(mbid: id) // Insert a valid MBID
+
+            let events = try await client.searchEvent(arid: artist.id)
+
+            XCTAssertTrue(!events.isEmpty, "Event count should not be empty")
+        } catch {
+            print("---------------")
+            print(error)
+            print("---------------")
+            XCTFail("Failed to fetch artist or events: \(error)")
+        }
+    }
+
 }

@@ -2,14 +2,15 @@
 
 
 public struct MBArtist: Decodable {
-    public let id, name, sortName, typeID: String
-    public let type, disambiguation: String
+    public let id, name: String
+    public let sortName, typeID: String?
+    public let type, disambiguation: String?
     public let gender, genderID: String?
-    public let country: String
+    public let country: String?
     public let area, beginArea, endArea: MBArea?
     public let lifeSpan: MBLifespan?
-    public let isnis: [String]
-    public let aliases: [MBAlias]
+    public let isnis: [String]?
+    public let aliases: [MBAlias]?
 
     enum CodingKeys: String, CodingKey {
         case id, name
