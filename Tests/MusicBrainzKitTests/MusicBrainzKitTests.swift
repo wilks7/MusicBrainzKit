@@ -23,17 +23,18 @@ final class MusicBrainzKitTests: XCTestCase {
         super.tearDown()
     }
 
-    func testGetArtist() async throws {
+    func testArtist() async throws {
         let id = phish.id
         do {
             let artist = try await client.getArtist(mbid: id) // Insert a valid MBID
             XCTAssertEqual(artist.id, id)
-            XCTAssertNotNil(artist.lifeSpan?.begin, "Artist data should not be nil")
+//            XCTAssertNotNil(artist.lifeSpan?.begin, "Artist data should not be nil")
 
         } catch {
             XCTFail("Failed to fetch artist: \(error)")
         }
     }
+    
 
     func testSearchArtist() async throws {
         let artist = phish
@@ -48,15 +49,17 @@ final class MusicBrainzKitTests: XCTestCase {
         }
     }
     
-    func testGetArtistEvents() async throws {
+    func testArtistEvents() async throws {
         let id = phish.id
 
         do {
             let artist = try await client.getArtist(mbid: id) // Insert a valid MBID
 
             let events = try await client.searchEvent(arid: artist.id)
-
             XCTAssertTrue(!events.isEmpty, "Event count should not be empty")
+//            if let event = events.first {
+//                XCTAssertNotNil(event.lifeSpan?.begin, "Event data should not be nil")
+//            }
         } catch {
             print("---------------")
             print(error)

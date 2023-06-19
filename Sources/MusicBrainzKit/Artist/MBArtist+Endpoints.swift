@@ -6,6 +6,8 @@ Abstract:
 Artist Endpoints for the MusicBrainz API.
 */
 
+import Foundation
+
 public extension MusicBrainzClient {
     
     

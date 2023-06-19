@@ -1,5 +1,8 @@
+import Foundation
+import DrillURL
 /// The model for an Event object from the MusicBrainz API
 public struct MBEvent: Decodable {
+    
     /// Unique identifier.
     public let id: String
     
@@ -14,10 +17,10 @@ public struct MBEvent: Decodable {
 //
     /// The event's life span (begin and end dates).
     public let lifeSpan: MBEventLifeSpan?
-//    
+//
     /// The event's time.
     public let time: String?
-//    
+//
     /// The relations associated with the event (e.g., artist, place).
     public var relations: [MBEventRelation]?
 //
@@ -30,14 +33,6 @@ public struct MBEvent: Decodable {
     }
 }
 
-/// The life span of an event (begin and end dates).
-public struct MBEventLifeSpan: Decodable {
-    /// The event's begin date.
-    public let begin: String?
-    
-    /// The event's end date.
-    public let end: String?
-}
 
 /// The relation associated with an event (e.g., artist, place).
 public struct MBEventRelation: Decodable {

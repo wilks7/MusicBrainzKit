@@ -66,5 +66,105 @@ public extension MBArtist {
         return try! decoder.decode(MBArtist.self, from: json)
 
     }
+    
+    static var NIN_Event: MBEvent {
+        let json = """
+        {
+            "id": "fe39727a-3d21-4066-9345-3970cbd6cca4",
+            "name": "Nine Inch Nails at Arena Riga",
+            "disambiguation": "",
+            "type-id": "ef55e8d7-3d00-394a-8012-f5506a29ff0b",
+            "type": "Concert",
+            "life-span": {
+              "end": "2014-05-06",
+              "ended": true,
+              "begin": "2014-05-06"
+            },
+            "time": "19:00",
+            "cancelled": false,
+            "setlist": "* Copy of A * 1,000,000 * Terrible Lie * March of the Pigs * Piggy * The Frail * The Wretched * The Becoming * Gave Up * Closer * Find My Way * Me, I'm Not * Came Back Haunted * The Great Destroyer * Eraser * Wish * Burn * The Hand That Feeds * Head Like a Hole # Encore * Hurt",
+            "relations": [
+              {
+                "type-id": "936c7c95-3156-3889-a062-8a0cd57f8946",
+                "type": "main performer",
+                "direction": "backward",
+                "target-type": "artist",
+                "artist": {
+                  "id": "b7ffd2af-418f-4be2-bdd1-22f8b48613da",
+                  "name": "Nine Inch Nails",
+                  "sort-name": "Nine Inch Nails",
+                  "disambiguation": ""
+                },
+                "begin": null,
+                "end": null,
+                "ended": false,
+                "target-credit": "",
+                "source-credit": "",
+                "attributes": [],
+                "attribute-ids": {},
+                "attribute-values": {}
+              },
+              {
+                "type-id": "492a850e-97eb-306a-a85e-4b6d98527796",
+                "type": "support act",
+                "direction": "backward",
+                "target-type": "artist",
+                "artist": {
+                  "id": "f7f32d93-0801-45cb-9f5a-e68f640649f4",
+                  "name": "Cold Cave",
+                  "sort-name": "Cold Cave",
+                  "disambiguation": ""
+                },
+                "begin": null,
+                "end": null,
+                "ended": false,
+                "target-credit": "",
+                "source-credit": "",
+                "attributes": [],
+                "attribute-ids": {},
+                "attribute-values": {}
+              },
+              {
+                "type-id": "e2c6f697-07dc-38b1-be0b-83d740165532",
+                "type": "held at",
+                "direction": "forward",
+                "target-type": "place",
+                "place": {
+                  "id": "478558f9-a951-4067-ad91-e83f6ba63e74",
+                  "name": "Arēna Rīga",
+                  "address": "Skanstes iela 21, Rīga, Latvia",
+                  "coordinates": {
+                    "longitude": 24.121403,
+                    "latitude": 56.967989
+                  },
+                  "disambiguation": "",
+                  "type-id": "a77c11f6-82fa-3cc0-9041-ac60e5f6e024",
+                  "type": "Indoor arena",
+                  "area": {
+                    "id": "9c612199-d66f-4109-aedc-67ab26e0a43b",
+                    "name": "Rīga",
+                    "sort-name": "Rīga",
+                    "disambiguation": "",
+                    "iso-3166-2-codes": ["LV-RIX"]
+                  }
+                },
+                "begin": null,
+                "end": null,
+                "ended": false,
+                "target-credit": "",
+                "source-credit": "",
+                "attributes": [],
+                "attribute-ids": {},
+                "attribute-values": {}
+              }
+            ],
+            "aliases": []
+        }
+
+        """.data(using: .utf8)!
+        
+        let decoder = JSONDecoder()
+        return try! decoder.decode(MBEvent.self, from: json)
+    }
 }
 

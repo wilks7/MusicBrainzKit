@@ -66,8 +66,13 @@ public extension MusicBrainzClient {
 
 }
 
+import DrillURL
+
 /// The model for the results of an event search from the MusicBrainz API
-public struct MBEventResults: Decodable {
+public struct MBEventResults: DecodableDate {
+    
+    static public var dateFormat: String { MBEventLifeSpan.dateFormat }
+    
     /// The count of events in the result set.
     public let count: Int
     

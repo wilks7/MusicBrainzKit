@@ -22,9 +22,15 @@ let package = Package(
             name: "MusicBrainzKit",
             dependencies: [
                 .product(name: "DrillURL", package: "DrillURL")
-            ]),
+            ]
+        ),
         .testTarget(
             name: "MusicBrainzKitTests",
-            dependencies: ["MusicBrainzKit"]),
+            dependencies: [
+                "MusicBrainzKit",
+                .product(name: "DrillURL", package: "DrillURL")
+
+            ]
+        ),
     ]
 )

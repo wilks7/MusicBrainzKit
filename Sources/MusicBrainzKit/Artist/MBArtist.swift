@@ -8,7 +8,7 @@ public struct MBArtist: Decodable {
     public let gender, genderID: String?
     public let country: String?
     public let area, beginArea, endArea: MBArea?
-    public let lifeSpan: MBLifespan?
+//    public let lifeSpan: MBLifeSpan?
     public let isnis: [String]?
     public let aliases: [MBAlias]?
 
@@ -21,7 +21,7 @@ public struct MBArtist: Decodable {
         case country, area
         case beginArea = "begin-area"
         case endArea = "end-area"
-        case lifeSpan = "life-span"
+//        case lifeSpan = "life-span"
         case isnis, aliases
     }
 }
