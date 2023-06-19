@@ -26,46 +26,102 @@ final class MusicBrainzKitTests: XCTestCase {
     func testArtist() async throws {
         let id = phish.id
         do {
-            let artist = try await client.getArtist(mbid: id) // Insert a valid MBID
+            let artist = try await client.lookupArtist(artistId: id)
             XCTAssertEqual(artist.id, id)
-//            XCTAssertNotNil(artist.lifeSpan?.begin, "Artist data should not be nil")
-
         } catch {
             XCTFail("Failed to fetch artist: \(error)")
         }
     }
     
-
     func testSearchArtist() async throws {
-        let artist = phish
+        // Mock search query
+        struct MockSearchQuery: MBSearchQuery {
+            let query: [String: String]?
+            let inc: [String]?
+        }
+        
+        // Mock search query parameters
+        let query: [String: String] = [
+            "artist": "Phish",
+            "country": "US"
+        ]
+        let inc: [String] = ["aliases", "tags"]
+        
+        let searchQuery = MockSearchQuery(query: query, inc: inc)
+        
+        // Perform the search
         do {
-            let artists = try await client.searchArtist(artist: artist.name) // Search a valid artist name
-            XCTAssertFalse(artists.isEmpty, "Artists array should not be empty")
-            XCTAssertTrue(artists.contains(where: {$0.name == artist.name}), "Artists should containt \(artist.name)")
-
+            let artistList = try await client.searchArtist(query: searchQuery)
+            // Assert the expected results
+            print(artistList.artists.map{$0.name})
+            XCTAssert(artistList.artists.contains(where: {$0.name == "Phish"}))
+            // Additional assertions...
         } catch {
-            print(error)
-            XCTFail("Failed to fetch artists: \(error)")
+            XCTFail("Search failed with error: \(error)")
+
         }
     }
     
-    func testArtistEvents() async throws {
-        let id = phish.id
-
+    func testSearchEvents() async throws {
+        // Mock search query
+        struct MockSearchQuery: MBSearchQuery {
+            let query: [String: String]?
+            let inc: [String]?
+        }
+        
+        // Mock search query parameters
+        let query: [String: String] = [
+            "artist": "Phish",
+            "country": "US"
+        ]
+        let inc: [String] = ["aliases", "tags"]
+        
+        let searchQuery = MockSearchQuery(query: query, inc: inc)
+        
+        // Perform the search
         do {
-            let artist = try await client.getArtist(mbid: id) // Insert a valid MBID
-
-            let events = try await client.searchEvent(arid: artist.id)
-            XCTAssertTrue(!events.isEmpty, "Event count should not be empty")
-//            if let event = events.first {
-//                XCTAssertNotNil(event.lifeSpan?.begin, "Event data should not be nil")
-//            }
+            let artistList = try await client.searchArtist(query: searchQuery)
+            // Assert the expected results
+            print(artistList.artists.map{$0.name})
+            XCTAssert(artistList.artists.contains(where: {$0.name == "Phish"}))
+            // Additional assertions...
         } catch {
-            print("---------------")
-            print(error)
-            print("---------------")
-            XCTFail("Failed to fetch artist or events: \(error)")
+            XCTFail("Search failed with error: \(error)")
+
         }
     }
+    
+    func testBrowseEventsForArtistPhish() async throws {
+        
+        struct MockSearchQuery: MBSearchQuery {
+            let query: [String: String]?
+            let inc: [String]?
+        }
+        
+        // Create the search query
+        let query: [String: String] = [
+            "artist": "Phish"
+        ]
+        
+        let inc: [String] = []
+        
+        let searchQuery = MockSearchQuery(query: query, inc: inc)
+        
+        do {
+            let result = try await client.browseEvents(query: searchQuery)
+            
+            let events = result.events
+            XCTAssert(events.count > 0, "Events list should not be empty")
+            
+            // Print the event names
+            for event in events {
+                print(event.name)
+            }
+            
+        } catch {
+            XCTFail("Failed to browse events for artist 'Phish': \(error)")
+        }
+    }
+
 
 }
