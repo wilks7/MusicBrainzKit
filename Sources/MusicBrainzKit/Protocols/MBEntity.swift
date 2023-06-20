@@ -1,7 +1,7 @@
 /// Protocol representing an entity with an ID.
 public protocol MBEntity: Decodable {
         
-    associatedtype Search: MBSearch
+    associatedtype Search: MBSearch where Search.Results.Result == Self
     
     /// The ID of the entity.
     var id: String { get }
@@ -22,5 +22,3 @@ extension MBEntity {
     static public var endpoint: String { title.lowercased() }
 
 }
-
-

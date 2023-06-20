@@ -86,7 +86,7 @@ public class MusicBrainzClient: DrillClient {
     ///
     /// - Parameter url: The `URL` to prepare a request for.
     /// - Returns: A `URLRequest` prepared for the given `URL`.
-    public func makeEndpoint<P:Encodable, I:Includes>(for endpoint: String, parameters: P?, includes: [I] = []) throws -> URL {
+    public func makeEndpoint<P:Encodable, I:Includes>(for endpoint: String, parameters: P?, includes: [I]) throws -> URL {
         var _endpoint = endpoint
         if let parameters {
             let encoder = JSONEncoder()

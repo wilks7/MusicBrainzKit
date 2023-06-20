@@ -35,12 +35,12 @@ final class MusicBrainzKitTests: XCTestCase {
     
     func testSearchArtist() async throws {
         let param = MBArtist.Search.Query(artist: "Phish")
-        let inc: [MBArtist.Search.Query.Include] = [.aliases]
+        let _: [MBArtist.Search.Query.Include] = [.aliases]
             
         do {
-            let result: MBArtist.Search.Results = try await client.search(endpoint: "artist", parameters: param, includes: inc)
+            let artists: [MBArtist] = try await client.search(parameters: param)
             // Assert the expected results
-            XCTAssert(result.artists.contains(where: {$0.name == "Phish"}))
+            XCTAssert(artists.contains(where: {$0.name == "Phish"}))
 
             // Additional assertions...
         } catch {
@@ -55,7 +55,7 @@ final class MusicBrainzKitTests: XCTestCase {
         let inc: [MBArtist.Search.Query.Include] = []
         
         do {
-            let result: MBEvent.Search.Results = try await client.browse(MBArtist.self, id: "e01646f2-2a04-450d-8bf2-0d993082e058", parameters: param, includes: inc)
+            let result: MBEvent.Search.Results = try await client.browse(MBArtist.self, id: "e01646f2-2a04-450d-8bf2-0d993082e058")
             
             let events = result.events
             XCTAssert(events.count > 0, "Events list should not be empty")

@@ -30,59 +30,26 @@ public struct MBArea: MBEntity, MBMatch {
     }
     
     static public var endpoint = "area"
+    
+    public typealias Search = MBAreaSearch
 }
 
-public extension MBArea {
-    
-    struct Search: MBSearch {
+public struct MBAreaSearch: MBSearch {
         
-        public struct Results: MBResults {
-            public let created: String?
-            public let count: Int?
-            public let offset: Int?
-            public let areas: [MBArea]
-            public var results: [MBArea] { areas }
-        }
-        
-        public struct Query: MBQuery {
-            public var area: String?
-            public var country: String?
-            public var type: String?
-            
-            public typealias Include = RelationsIncludes
-
-        }
-        
-    }
-
-}
-
-
-public extension MusicBrainzClient {
-    
-    typealias Search = MBArea.Search
-    
-    /// Searches for areas using the MusicBrainz API.
-    ///
-    /// - Parameters:
-    ///   - query: The search query parameters for areas.
-    /// - Throws: An error if the network request fails.
-    /// - Returns: An `MBAreaList` containing the list of areas that match the search query.
-    func searchArea(parameters: Search.Query, includes: [Search.Query.Include]) async throws -> Search.Results {
-        let endpoint = "area/"
-        return try await search(endpoint: endpoint, parameters: parameters, includes: includes)
+    public struct Results: MBResults {
+        public let created: String?
+        public let count: Int?
+        public let offset: Int?
+        public let areas: [MBArea]
+        public var results: [MBArea] { areas }
     }
     
-    
-    /// Browse areas
-    ///
-    /// - Parameter query: Query parameters for browsing areas.
-    /// - Throws: An error if the network request fails.
-    /// - Returns: An `MBBrowseAreasResult` representing the browse result for areas.
-    func browseArea<R: MBEntity>(for entity: R.Type, with id: String, parameters: Search.Query, includes: [Search.Query.Include] = []) async throws -> R.Search.Results
-    where R.Search.Results.Result:MBEntity{
-        return try await browse(MBArea.self, id: id, parameters: parameters, includes: includes)
+    public struct Query: MBQuery {
+        public var area: String?
+        public var country: String?
+        public var type: String?
+        
+        public typealias Include = RelationsIncludes
+
     }
 }
-
-
