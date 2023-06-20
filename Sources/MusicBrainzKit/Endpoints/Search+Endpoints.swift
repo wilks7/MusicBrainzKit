@@ -31,5 +31,11 @@ public extension MusicBrainzClient {
         let results: E.Search.Results =  try await fetch(url: url)
         return results.results
     }
+    
+    func search<E:MBEntity>(parameters: [String:String], includes: [E.Search.Query.Include] = []) async throws -> [E] {
+        let url = try makeEndpoint(for: E.endpoint, parameters: parameters, includes: includes)
+        let results: E.Search.Results =  try await fetch(url: url)
+        return results.results
+    }
 
 }
