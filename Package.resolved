@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "drillurl",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wilks7/DrillURL.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "15fce429bafe03150e7853e54b2f27032a12865f"
+      }
+    }
+  ],
+  "version" : 2
+}
