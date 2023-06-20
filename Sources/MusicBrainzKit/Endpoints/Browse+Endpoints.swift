@@ -2,9 +2,7 @@
 import Foundation
 
 public extension MusicBrainzClient {
-    
-    
-    
+        
     func browse<B: MBEntity, R:MBResults>(_ type: B.Type, id: String) async throws -> R where R.Result:MBEntity {
         let query: DefaultQuery? = nil
         return try await self.browse(type, id: id, parameters: query, includes: [])
