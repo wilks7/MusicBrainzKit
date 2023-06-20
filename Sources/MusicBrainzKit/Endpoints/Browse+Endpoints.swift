@@ -4,36 +4,6 @@ import Foundation
 public extension MusicBrainzClient {
     
     
-//    func browse<B: MBEntity, E:MBEntity, T: MBSearchResult, Q: Encodable>(browse: E.Type, for: B.Type, with id: String, query: MBSearchQuery<Q>) async throws -> T where T.Entity == E {
-//        return try await self.browse(resultType: E.endpoint, browseType: B.endpoint, browseID: id, query: query)
-//    }
-    
-    
-    /// /<RESULT_ENTITY_TYPE>?<BROWSING_ENTITY_TYPE>=<MBID>&limit=<LIMIT>&offset=<OFFSET>&inc=<INC>
-//    func browse<T: Decodable, Q: Encodable>(
-//        resultType: String,
-//        browseType: String,
-//        browseID: String,
-//        query: MBSearchQuery<Q>
-//    ) async throws -> T {
-//
-//        let encoder = JSONEncoder()
-//        let data = try encoder.encode(query.query)
-//        let encodedQuery = String(data: data, encoding: .utf8)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-//        
-////        let incQuery = inc.joined(separator: "+")
-//        let browseEndpoint = "\(resultType)?\(browseType)=\(browseID)"//&inc=\(encodedQuery)"
-//        return try await fetch(endpoint: browseEndpoint)
-//    }
-
-//    func browse<R:MBEntity, E: MBEntity, Q:Encodable>(id: String, query: MBQuery<R,E,Q> ) async throws -> MBResult<R> {
-//        let encoder = JSONEncoder()
-//        let data = try encoder.encode(query.query)
-//        let encodedQuery = String(data: data, encoding: .utf8)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-//        let browseEndpoint = "\(R.endpoint)?\(E.endpoint)=\(id)"//&inc=\(encodedQuery)"
-//        return try await fetch(endpoint: browseEndpoint)
-//
-//    }
     
     func browse<B: MBEntity, R:MBResults>(_ type: B.Type, id: String) async throws -> R where R.Result:MBEntity {
         let query: DefaultQuery? = nil

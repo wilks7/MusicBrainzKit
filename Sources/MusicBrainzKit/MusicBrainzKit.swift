@@ -78,6 +78,29 @@ public class MusicBrainzClient: DrillClient {
         
         return request
     }
+    
+    
+    /// Prepares a new `URL` for a given endpoint and parameters.
+    ///
+    /// This function encodes the parameters and the includes tags for the object response
+    ///
+    /// - Parameter url: The `URL` to prepare a request for.
+    /// - Returns: A `URLRequest` prepared for the given `URL`.
+    public func makeEndpoint<P:Encodable, I:Includes>(for endpoint: String, parameters: P?, includes: [I] = []) throws -> URL {
+        var _endpoint = endpoint
+        if let parameters {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(parameters)
+            let encodedQuery = String(data: data, encoding: .utf8)?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+            _endpoint += "?query=\(encodedQuery)"
+        }
+        
+        if !includes.isEmpty {
+            let incQuery = includes.map{$0.rawValue}.joined(separator: "+")
+            _endpoint += "&inc=\(incQuery)"
+        }
+        return try self.createURL(with: _endpoint)
+    }
 }
 
 

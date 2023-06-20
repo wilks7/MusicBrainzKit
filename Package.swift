@@ -1,11 +1,11 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 5.8
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let package = Package(
     name: "MusicBrainzKit",
-    platforms: [.macOS(.v14), .iOS(.v17), .tvOS(.v15), .watchOS(.v10), .macCatalyst(.v13)],
+    platforms: [.macOS(.v13), .iOS(.v16), .tvOS(.v14), .watchOS(.v9), .macCatalyst(.v13)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
@@ -13,7 +13,7 @@ let package = Package(
             targets: ["MusicBrainzKit"]),
     ],
     dependencies: [
-        .package(path: "../DrillURL")
+        .package(url: "https://github.com/wilks7/DrillURL.git", branch: "main"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
