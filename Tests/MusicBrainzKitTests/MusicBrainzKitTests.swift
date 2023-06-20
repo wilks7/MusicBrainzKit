@@ -34,88 +34,57 @@ final class MusicBrainzKitTests: XCTestCase {
     }
     
     func testSearchArtist() async throws {
-        // Mock search query
-        struct MockSearchQuery: MBSearchQuery {
-            let query: [String: String]?
-            let inc: [String]?
-        }
-        
-        // Mock search query parameters
-        let query: [String: String] = [
-            "artist": "Phish",
-            "country": "US"
-        ]
-        let inc: [String] = ["aliases", "tags"]
-        
-        let searchQuery = MockSearchQuery(query: query, inc: inc)
-        
-        // Perform the search
+        let param = MBArtist.Search.Query(artist: "Phish")
+        let inc: [MBArtist.Search.Query.Include] = [.aliases]
+            
         do {
-            let artistList = try await client.searchArtist(query: searchQuery)
+            let result: MBArtist.Search.Results = try await client.search(endpoint: "artist", parameters: param, includes: inc)
             // Assert the expected results
-            print(artistList.artists.map{$0.name})
-            XCTAssert(artistList.artists.contains(where: {$0.name == "Phish"}))
+            XCTAssert(result.artists.contains(where: {$0.name == "Phish"}))
+
             // Additional assertions...
         } catch {
             XCTFail("Search failed with error: \(error)")
 
         }
     }
-    
-    func testSearchEvents() async throws {
-        // Mock search query
-        struct MockSearchQuery: MBSearchQuery {
-            let query: [String: String]?
-            let inc: [String]?
-        }
-        
-        // Mock search query parameters
-        let query: [String: String] = [
-            "artist": "Phish",
-            "country": "US"
-        ]
-        let inc: [String] = ["aliases", "tags"]
-        
-        let searchQuery = MockSearchQuery(query: query, inc: inc)
-        
-        // Perform the search
-        do {
-            let artistList = try await client.searchArtist(query: searchQuery)
-            // Assert the expected results
-            print(artistList.artists.map{$0.name})
-            XCTAssert(artistList.artists.contains(where: {$0.name == "Phish"}))
-            // Additional assertions...
-        } catch {
-            XCTFail("Search failed with error: \(error)")
 
-        }
-    }
     
-    func testBrowseEventsForArtistPhish() async throws {
-        
-        struct MockSearchQuery: MBSearchQuery {
-            let query: [String: String]?
-            let inc: [String]?
-        }
-        
-        // Create the search query
-        let query: [String: String] = [
-            "artist": "Phish"
-        ]
-        
-        let inc: [String] = []
-        
-        let searchQuery = MockSearchQuery(query: query, inc: inc)
+    func testBrowseEvents() async throws {
+        let param = MBArtist.Search.Query()
+        let inc: [MBArtist.Search.Query.Include] = []
         
         do {
-            let result = try await client.browseEvents(query: searchQuery)
+            let result: MBEvent.Search.Results = try await client.browse(MBArtist.self, id: "e01646f2-2a04-450d-8bf2-0d993082e058", parameters: param, includes: inc)
             
             let events = result.events
             XCTAssert(events.count > 0, "Events list should not be empty")
             
             // Print the event names
             for event in events {
-                print(event.name)
+                let date = event.lifeSpan?.begin ?? ""
+                print(event.name + " - " + date)
+            }
+            
+        } catch {
+            XCTFail("Failed to browse events for artist 'Phish': \(error)")
+        }
+    }
+    
+    func testBrowseRecordings() async throws {
+        let param = MBArtist.Search.Query()
+        let inc: [MBArtist.Search.Query.Include] = []
+        
+        do {
+            let result: MBRecording.Search.Results = try await client.browse(MBArtist.self, id: "e01646f2-2a04-450d-8bf2-0d993082e058")
+            
+            let recordings = result.recordings
+            XCTAssert(recordings.count > 0, "Recordings list should not be empty")
+            
+            // Print the event names
+            for recording in recordings {
+//                let date = event.lifeSpan?.begin ?? ""
+                print(recording.title)
             }
             
         } catch {
